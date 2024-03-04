@@ -1,6 +1,5 @@
 import '../styles/ItemsList.css';
 import { TItem } from '../assets/types';
-import { ITEMS_PER_PAGE } from '../assets/consts';
 
 export const ItemsList = ( {items, startIndex} : {items: TItem[], startIndex: number}) => {
   return (
@@ -17,7 +16,7 @@ export const ItemsList = ( {items, startIndex} : {items: TItem[], startIndex: nu
       <tbody className='items-list'>
         {items.map((item, index) => (
           <tr key={item.id} className='items-list-item'>
-            <td className='items-list-item-number'>{(startIndex - 1) * ITEMS_PER_PAGE + index}</td>
+            <td className='items-list-item-number'>{startIndex + index}</td>
             <td className='items-list-item-name'>{item.name}</td>
             <td className='items-list-item-brand'>{item.brand}</td>
             <td className='items-list-item-price'>{item.price}</td>
