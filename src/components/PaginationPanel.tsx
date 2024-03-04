@@ -11,7 +11,7 @@ export const PaginationPanel = (
   const isFirstPage = currentPage === 1;
   const isLastPage = ((currentPage - 1) * offset) >= totalItems;
   const listStart = ((currentPage - 1) * offset) + 1;
-  const listFinish = Math.min((currentPage + 1) * offset, totalItems);
+  const listFinish = Math.min((currentPage) * offset, totalItems);
 
   return (
     <div className='items-list-pagination-container'>

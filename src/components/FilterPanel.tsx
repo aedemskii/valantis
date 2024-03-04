@@ -2,23 +2,25 @@ import { useState } from "react";
 import { TItemsFilterParams } from "../assets/types";
 
 export const FilterPanel = (
-  { setFilterParams } : {
-    setFilterParams: (item: TItemsFilterParams) => void
+  { setFilterParams, clearFilterParams } : {
+    setFilterParams: (item: TItemsFilterParams) => void,
+    clearFilterParams: () => void
   }) => {
-  const [name, setName] = useState<string>('');
+  const [product, setProduct] = useState<string>('');
   const [brand, setBrand] = useState<string>('');
   const [price, setPrice] = useState<string>('');
 
   const clearPanel = () => {
-    setName('');
+    setProduct('');
     setBrand('');
     setPrice('');
+    clearFilterParams();
   };
 
   const handleClick = () => {
     const params: TItemsFilterParams = {};
-    if (name !== '')
-      params.name = name;
+    if (product !== '')
+      params.product = product;
     if (brand !== '')
       params.brand = brand;
     if (price !== '')
@@ -36,11 +38,11 @@ export const FilterPanel = (
     <div className='items-filter-panel'>
       <input
         type='text'
-        placeholder='Name'
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        placeholder='Product'
+        value={product}
+        onChange={(e) => setProduct(e.target.value)}
       />
-      <button onClick={() => setName('')}>Clear Name</button>
+      <button onClick={() => setProduct('')}>Clear Product</button>
       <input
         type='text'
         placeholder='Brand'

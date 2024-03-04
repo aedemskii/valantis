@@ -1,13 +1,19 @@
 export type TItem = {
   id: string;
-  name: string;
+  product: string;
   brand: string;
   price: number;
 };
 
 export type TItemsFilterParams = {
-  name?: string | null;
+  product?: string | null;
   brand?: string | null;
   price?: number | null;
   page?: number;
 };
+
+export type TItemsRequestParams = {
+  product?: string;
+  brand?: string;
+  price?: number;
+}
