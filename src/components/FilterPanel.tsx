@@ -1,4 +1,4 @@
-import './FilterPanel.css';
+import '../styles/FilterPanel.css';
 
 export const FilterPanel = () => {
   return (

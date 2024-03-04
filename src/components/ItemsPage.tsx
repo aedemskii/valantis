@@ -1,14 +1,14 @@
 import { FilterPanel } from './FilterPanel';
 import { ItemsList } from './ItemsList';
 import { PaginationPanel } from './PaginationPanel';
-import './ItemsPage.css';
+import '../styles/ItemsPage.css';
 
 export const ItemsPage = () => {
 
   return (
     <div className='items-page-container'>
       <FilterPanel />
-      <ItemsList />
+      <ItemsList items={[]} startIndex={1}/>
       <PaginationPanel />
     </div>
   );

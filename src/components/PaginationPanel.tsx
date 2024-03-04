@@ -1,4 +1,4 @@
-import './PaginationPanel.css';
+import '../styles/PaginationPanel.css';
 
 export const PaginationPanel = () => {
   return (
