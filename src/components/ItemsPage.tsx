@@ -6,7 +6,7 @@ import { TItem } from '../assets/types';
 import '../styles/ItemsPage.css';
 
 export const ItemsPage = () => {
-  const page = 0;
+  const page = 1;
   const items: TItem[] = [];
 
   const setPage = (page: number) => {

@@ -9,8 +9,8 @@ export const PaginationPanel = (
   }) => {
 
   const isFirstPage = currentPage === 1;
-  const isLastPage = (currentPage * offset) >= totalItems;
-  const listStart = (currentPage * offset) + 1;
+  const isLastPage = ((currentPage - 1) * offset) >= totalItems;
+  const listStart = ((currentPage - 1) * offset) + 1;
   const listFinish = Math.min((currentPage + 1) * offset, totalItems);
 
   return (
@@ -22,9 +22,9 @@ export const PaginationPanel = (
       >
         Previous
       </button>
-      {isFirstPage && <span className='items-list-pagination-ellipsis'>1...</span>}
+      {!isFirstPage && <span className='items-list-pagination-ellipsis'>1...</span>}
       <span className='items-list-pagination-current-page'>{`${listStart}...${listFinish}`}</span>
-      {isLastPage && <span className='items-list-pagination-ellipsis'>...{totalItems}</span>}
+      {!isLastPage && <span className='items-list-pagination-ellipsis'>...{totalItems}</span>}
       <button
         className='items-list-pagination-button right'
         onClick={() => setPage(currentPage + 1)}
