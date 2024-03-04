@@ -15,7 +15,9 @@ export const ItemsPage = () => {
 
   return (
     <div className='items-page-container'>
-      <FilterPanel />
+      <FilterPanel 
+        setFilterParams={() => {}}
+      />
       <ItemsList items={items} startIndex={(page - 1) * ITEMS_PER_PAGE}/>
       <PaginationPanel
         currentPage={page}
