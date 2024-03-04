@@ -8,9 +8,9 @@ export const PaginationPanel = (
     setPage: (page: number) => void
   }) => {
 
-  const isFirstPage = currentPage === 0;
-  const isLastPage = (currentPage + 1) * offset >= totalItems;
-  const listStart = currentPage * offset + 1;
+  const isFirstPage = currentPage === 1;
+  const isLastPage = (currentPage * offset) >= totalItems;
+  const listStart = (currentPage * offset) + 1;
   const listFinish = Math.min((currentPage + 1) * offset, totalItems);
 
   return (
