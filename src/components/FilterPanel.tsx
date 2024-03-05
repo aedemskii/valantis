@@ -1,20 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TItemsFilterParams } from "../assets/types";
 
 export const FilterPanel = (
-  { setFilterParams, clearFilterParams } : {
-    setFilterParams: (item: TItemsFilterParams) => void,
-    clearFilterParams: () => void
-  }) => {
+  {
+    filterParams,
+    setFilterParams
+  } : {
+    filterParams: TItemsFilterParams,
+    setFilterParams: (params: TItemsFilterParams) => void
+}) => {
   const [product, setProduct] = useState<string>('');
   const [brand, setBrand] = useState<string>('');
   const [price, setPrice] = useState<string>('');
+
+  useEffect(() => {
+    setProduct(filterParams.product || '');
+    setBrand(filterParams.brand || '');
+    setPrice(filterParams.price ? filterParams.price.toString() : '');
+  }, [filterParams]);
 
   const clearPanel = () => {
     setProduct('');
     setBrand('');
     setPrice('');
-    clearFilterParams();
   };
 
   const handleClick = () => {

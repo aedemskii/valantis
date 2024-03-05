@@ -1,41 +1,42 @@
-import { useState } from 'react';
 import { FilterPanel } from './FilterPanel';
 import { ItemsList } from './ItemsList';
 import { PaginationPanel } from './PaginationPanel';
-import { useFilterParams } from '../hooks/useFilterParams';
 import { ITEMS_PER_PAGE } from '../assets/consts';
-import { TItem } from '../assets/types';
+import { useFilterParams } from '../hooks/useFilterParams';
+import { usePagination } from '../hooks/usePagination';
+import { useProductList } from '../hooks/useProductList';
 import '../styles/ItemsPage.css';
 
 export const ItemsPage = () => {
-  const [ items, setItems ] = useState<TItem[]>([]);
-  const {
-    filterParams,
-    setFilterParams,
-    updateFilterParams,
-    clearFilterParams
-  } = useFilterParams();
-
-  const setPage = (page: number) => {
-    updateFilterParams({ page });
-  };
+  const [ filterParams, setFilterParams ] = useFilterParams();
+  const [ page, setPage ] = usePagination();
+  const { items, loading, error } = useProductList(filterParams, page);
 
   return (
     <div className='items-page-container'>
-      <FilterPanel
+      <FilterPanel 
+        filterParams={filterParams}
         setFilterParams={setFilterParams}
-        clearFilterParams={clearFilterParams}
       />
-      <ItemsList
-        items={items}
-        numerationStart={((filterParams.page || 1) - 1) * ITEMS_PER_PAGE + 1}
-      />
-      <PaginationPanel
-        currentPage={filterParams.page || 1}
-        totalItems={items.length}
-        offset={ITEMS_PER_PAGE}
-        setPage={setPage}
-      />
+      {
+        loading ? 
+          <div className='items-list-loading'>Loading...</div>
+        : error ?
+          <div className='items-list-error'>{error}</div>
+        : items.length &&
+          <>
+            <ItemsList
+              items={items}
+              numerationStart={(page - 1) * ITEMS_PER_PAGE + 1}
+            />
+            <PaginationPanel
+              currentPage={page}
+              totalItems={items.length}
+              offset={ITEMS_PER_PAGE}
+              setPage={setPage}
+            />
+          </>
+      }
     </div>
   );
 };

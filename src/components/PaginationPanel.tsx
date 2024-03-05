@@ -18,7 +18,7 @@ export const PaginationPanel = (
       <button
         className='items-list-pagination-button left'
         onClick={() => setPage(currentPage - 1)}
-        disabled={isFirstPage}
+        // disabled={isFirstPage}
       >
         Previous
       </button>
@@ -28,7 +28,7 @@ export const PaginationPanel = (
       <button
         className='items-list-pagination-button right'
         onClick={() => setPage(currentPage + 1)}
-        disabled={isLastPage}
+        // disabled={isLastPage}
       >
         Next
       </button>
