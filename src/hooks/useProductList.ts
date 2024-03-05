@@ -15,19 +15,21 @@ export const useProductList = (filterParams: TItemsFilterParams, page: number): 
 
     (async () => {
       try {
-        const tempItemIds: string[] = [];
+        const tempItemIds: Set<string> = new Set();
         //const params = Object.keys(filterParams).length ? filterParams : undefined;
-        while (tempItemIds.length < ITEMS_PER_PAGE) {
+        while (tempItemIds.size < ITEMS_PER_PAGE) {
           const response = await fetchItemsIds({
-            offset: (page - 1) * ITEMS_PER_PAGE + items.length,
-            limit: ITEMS_PER_PAGE - items.length,
+            offset: (page - 1) * ITEMS_PER_PAGE + tempItemIds.size,
+            limit: ITEMS_PER_PAGE - tempItemIds.size,
             //params: params,
             signal: abortController.signal
           });
-          const uniqueIds = [...new Set(response.result)];
-          tempItemIds.push(...uniqueIds);
+          const ids = response.result;
+          ids.forEach(id => {
+            tempItemIds.add(id);
+          });
         }
-        const response = await fetchItemsByIds(tempItemIds);
+        const response = await fetchItemsByIds([...tempItemIds]);
         setItems(response.result);
       } catch (error: unknown) {
         if (error instanceof Error)

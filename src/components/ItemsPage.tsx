@@ -19,7 +19,7 @@ export const ItemsPage = () => {
         setFilterParams={setFilterParams}
       />
       {
-        loading ? 
+        loading ?
           <div className='items-list-loading'>Loading...</div>
         : error ?
           <div className='items-list-error'>{error}</div>
