@@ -3,9 +3,11 @@ import { TItemsFilterParams } from "../assets/types";
 
 export const FilterPanel = (
   {
+    brands,
     filterParams,
     setFilterParams
   } : {
+    brands: string[],
     filterParams: TItemsFilterParams,
     setFilterParams: (params: TItemsFilterParams) => void
 }) => {
@@ -25,8 +27,8 @@ export const FilterPanel = (
     setPrice('');
   };
 
-  const handleClick = () => {
-    const params: TItemsFilterParams = {};
+  const handleFilterClick = () => {
+    const params: TItemsFilterParams = { page: 1 };
     if (product !== '')
       params.product = product;
     if (brand !== '')
@@ -45,32 +47,35 @@ export const FilterPanel = (
   return (
     <div className='items-filter-panel'>
       <input
-        type='text'
+        type='search'
         placeholder='Product'
         value={product}
         onChange={(e) => setProduct(e.target.value)}
       />
-      <button onClick={() => setProduct('')}>Clear Product</button>
+      <>
+        <input
+          type='search'
+          placeholder='Brand'
+          list='brands'
+          value={brand}
+          onChange={(e) => setBrand(e.target.value)}
+        />
+        <datalist id='brands'>
+          {brands.map( (brand, i) => <option key={brand + i} value={brand} />)}
+        </datalist>
+      </>
       <input
-        type='text'
-        placeholder='Brand'
-        value={brand}
-        onChange={(e) => setBrand(e.target.value)}
-      />
-      <button onClick={() => setBrand('')}>Clear Brand</button>
-      <input
-        type='text'
+        type='search'
         placeholder='Price'
         value={price}
         onChange={handleNumberInput}
       />
-      <button onClick={() => setPrice('')}>Clear Price</button>
       <button
         onClick={clearPanel}>
         Clear All
       </button>
       <button
-        onClick={handleClick}
+        onClick={handleFilterClick}
       >
         Filter
       </button>

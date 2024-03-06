@@ -18,13 +18,13 @@ export const PaginationPanel = (
       <button
         className='items-list-pagination-button left'
         onClick={() => setPage(currentPage - 1)}
-        // disabled={isFirstPage}
+        disabled={isFirstPage}
       >
         Previous
       </button>
-      {!isFirstPage && <span className='items-list-pagination-ellipsis'>1...</span>}
-      <span className='items-list-pagination-current-page'>{`${listStart}...${listFinish}`}</span>
-      {!isLastPage && <span className='items-list-pagination-ellipsis'>...{totalItems}</span>}
+      {!isFirstPage && <span className='items-list-pagination-ellipsis'>1... </span>}
+      <span className='items-list-pagination-current-page'>{`${listStart}-${listFinish}`}</span>
+      {!isLastPage && <span className='items-list-pagination-ellipsis'> ...{totalItems}</span>}
       <button
         className='items-list-pagination-button right'
         onClick={() => setPage(currentPage + 1)}

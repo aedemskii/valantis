@@ -3,20 +3,28 @@ import { ItemsList } from './ItemsList';
 import { PaginationPanel } from './PaginationPanel';
 import { ITEMS_PER_PAGE } from '../assets/consts';
 import { useFilterParams } from '../hooks/useFilterParams';
-import { usePagination } from '../hooks/usePagination';
 import { useProductList } from '../hooks/useProductList';
+import { TItemsFilterParams } from '../assets/types';
 import '../styles/ItemsPage.css';
 
 export const ItemsPage = () => {
   const [ filterParams, setFilterParams ] = useFilterParams();
-  const [ page, setPage ] = usePagination();
-  const { items, loading, error } = useProductList(filterParams, page);
+  const { items, totalItems, brands, loading, error } = useProductList(filterParams);
+
+  const handleSetFilterParams = (params: TItemsFilterParams) => {
+    setFilterParams(params);
+  };
+
+  const setPage = (page: number) => {
+    setFilterParams({ ...filterParams, page });
+  };
 
   return (
     <div className='items-page-container'>
-      <FilterPanel 
+      <FilterPanel
+        brands={brands}
         filterParams={filterParams}
-        setFilterParams={setFilterParams}
+        setFilterParams={handleSetFilterParams}
       />
       {
         loading ?
@@ -27,11 +35,11 @@ export const ItemsPage = () => {
           <>
             <ItemsList
               items={items}
-              numerationStart={(page - 1) * ITEMS_PER_PAGE + 1}
+              numerationStart={(filterParams.page - 1) * ITEMS_PER_PAGE + 1}
             />
             <PaginationPanel
-              currentPage={page}
-              totalItems={items.length}
+              currentPage={filterParams.page}
+              totalItems={totalItems}
               offset={ITEMS_PER_PAGE}
               setPage={setPage}
             />

@@ -1,14 +1,53 @@
-import { Md5 } from 'ts-md5';
-import { TItem, TFetchItemsIdsParams } from './types';
+import { TItem, TItemsFilterParamsForFetch } from './types';
 import { API_URL } from './consts';
+import { generatePassword } from './services';
 
-export const fetchItemsIds = async ({offset, limit, params, signal}: TFetchItemsIdsParams): Promise<{result: string[]}> => {
+export const requestDefaultItemsIds = async (offset: number, limit: number, signal: AbortSignal): Promise<{result: string[]}> => {
   const requestBody = {
-    action: params ? 'filter' : 'get_ids',
+    action: 'get_ids',
     params: {
-      ...(params ?? {}),
       offset: offset,
       limit: limit
+    }
+  };
+
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Auth': generatePassword()
+    },
+    body: JSON.stringify(requestBody),
+    signal: signal
+  });
+
+  return await response.json();
+};
+
+export const requestFilteredItemsIds = async (params: TItemsFilterParamsForFetch, signal: AbortSignal): Promise<{result: string[]}> => {
+  const requestBody = {
+    action: 'filter',
+    params: params
+  };
+
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Auth': generatePassword()
+    },
+    body: JSON.stringify(requestBody),
+    signal: signal
+  });
+
+  return await response.json();
+};
+
+export const fetchFields = async (signal: AbortSignal): Promise<{result: string[]}> => {
+  const requestBody = {
+    action: 'get_fields',
+    params: {
+      field: 'brand',
     }
   };
 
@@ -33,7 +72,7 @@ export const fetchItemsByIds = async (ids: string[]): Promise<{result: TItem[]}>
     }
   };
 
-  const response = await fetch('http://api.valantis.store:40000/', {
+  const response = await fetch(API_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -43,24 +82,4 @@ export const fetchItemsByIds = async (ids: string[]): Promise<{result: TItem[]}>
   });
 
   return await response.json();
-};
-
-const generatePassword = (): string => {
-  const date = new Date();
-  const year = date.getFullYear().toString();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  const md5 = new Md5();
-  const end = md5.appendStr('Valantis_' + year + month + day).end();
-  try {
-    if (end) {
-      const password = end.toString();
-      return password;
-    } else {
-      throw new Error('Error in md5');
-    }
-  } catch (e) {
-    console.error(e);
-    return '';
-  }
 };
