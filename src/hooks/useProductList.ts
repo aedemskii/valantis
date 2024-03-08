@@ -33,8 +33,10 @@ export const useProductList = (filterParams: TItemsFilterParams): TProductListRe
           const response = await fetchFields(abortController.signal);
           setBrands([...new Set(response.result)].filter(brand => brand));
         } catch (error: unknown) {
-          if (error instanceof Error)
+          if (error instanceof Error) {
+            console.error(error.message);
             setError(error.message);
+          }
         }
       })();
     }
@@ -48,8 +50,10 @@ export const useProductList = (filterParams: TItemsFilterParams): TProductListRe
         });
         setItems([...uniqueProducts.values()]);
       } catch (error: unknown) {
-        if (error instanceof Error)
+        if (error instanceof Error) {
+          console.error(error.message);
           setError(error.message);
+        }
       } finally {
         setLoading(false);
       }
@@ -58,13 +62,10 @@ export const useProductList = (filterParams: TItemsFilterParams): TProductListRe
     const filterParamsForFetch = parseParamsForFetch(filterParams);
     const page = filterParams.page;
     if (filterParamsForFetch === null) {
-      // No filter case
       const ids = unfilteredItemsIds.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
       if (!hasNullValues(ids) && ids.length === ITEMS_PER_PAGE) {
-        // We already have the ids
         requestItemsByIds(ids);
       } else {
-        // We need to fetch new ids
         (async () => {
           try {
             const tempItemIds: Set<string> = new Set();
@@ -90,8 +91,10 @@ export const useProductList = (filterParams: TItemsFilterParams): TProductListRe
             });
             requestItemsByIds([...tempItemIds]);
           } catch (error: unknown) {
-            if (error instanceof Error)
+            if (error instanceof Error) {
+              console.error(error.message);
               setError(error.message);
+            }
           }
         })();
       }
@@ -111,8 +114,10 @@ export const useProductList = (filterParams: TItemsFilterParams): TProductListRe
             setFilteredItemsIds(itemsIds);
             requestItemsByIds(itemsIds.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE));
           } catch (error: unknown) {
-            if (error instanceof Error)
+            if (error instanceof Error) {
+              console.error(error.message);
               setError(error.message);
+            }
           }
         })();
       }
@@ -121,7 +126,7 @@ export const useProductList = (filterParams: TItemsFilterParams): TProductListRe
     return () => {
       abortController.abort();
     };
-  }, [filterParams]);
+  }, [filterParams, error]);
 
   return {
     items,

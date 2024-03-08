@@ -9,7 +9,7 @@ export const PaginationPanel = (
   }) => {
 
   const isFirstPage = currentPage === 1;
-  const isLastPage = ((currentPage - 1) * offset) >= totalItems;
+  const isLastPage = (currentPage * offset) > totalItems;
   const listStart = ((currentPage - 1) * offset) + 1;
   const listFinish = Math.min((currentPage) * offset, totalItems);
 
@@ -28,7 +28,7 @@ export const PaginationPanel = (
       <button
         className='items-list-pagination-button right'
         onClick={() => setPage(currentPage + 1)}
-        // disabled={isLastPage}
+        disabled={isLastPage}
       >
         Next
       </button>

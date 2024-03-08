@@ -31,7 +31,7 @@ export const ItemsPage = () => {
           <div className='items-list-loading'>Loading...</div>
         : error ?
           <div className='items-list-error'>{error}</div>
-        : items.length &&
+        : items.length ?
           <>
             <ItemsList
               items={items}
@@ -44,6 +44,7 @@ export const ItemsPage = () => {
               setPage={setPage}
             />
           </>
+        : <div className='items-list-no-results'>No results found</div>
       }
     </div>
   );
