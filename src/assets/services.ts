@@ -23,6 +23,7 @@ export const generatePassword = (): string => {
   const day = date.getDate().toString().padStart(2, '0');
   const md5 = new Md5();
   const end = md5.appendStr('Valantis_' + year + month + day).end();
+
   try {
     if (end) {
       const password = end.toString();

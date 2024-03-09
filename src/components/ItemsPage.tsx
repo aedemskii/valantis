@@ -26,9 +26,12 @@ export const ItemsPage = () => {
         filterParams={filterParams}
         setFilterParams={handleSetFilterParams}
       />
+      <div className='items-list-holder'>
       {
         loading ?
-          <div className='items-list-loading'>Loading...</div>
+          <div className='items-list-loading'>
+            <div className='spinner'/>
+          </div>
         : error ?
           <div className='items-list-error'>{error}</div>
         : items.length ?
@@ -46,6 +49,7 @@ export const ItemsPage = () => {
           </>
         : <div className='items-list-no-results'>No results found</div>
       }
+      </div>
     </div>
   );
 };

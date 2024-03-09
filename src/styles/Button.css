@@ -1,0 +1,28 @@
+div.button {
+  display: inline-block;
+  background-color: rgb(31, 32, 31);
+  color: white;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 5px 10px;
+  cursor: default;
+  user-select: none;
+}
+
+div.button.active {
+  cursor: pointer;
+}
+
+div.button.disabled {
+  color: rgb(150, 150, 150);
+  border-color: rgb(150, 150, 150);
+}
+
+div.button.disabled * {
+  color: rgb(150, 150, 150);
+  border-color: rgb(150, 150, 150);
+}
+
+div.button.active:hover {
+  background-color: rgb(54, 55, 53);
+}

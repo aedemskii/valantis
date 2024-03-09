@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { TItemsFilterParams } from "../assets/types";
+import { Button } from "./Button";
+import '../styles/FilterPanel.css';
 
 export const FilterPanel = (
   {
@@ -25,6 +27,13 @@ export const FilterPanel = (
     setProduct('');
     setBrand('');
     setPrice('');
+    const params: TItemsFilterParams = {
+      page: 1,
+      product: '',
+      brand: '',
+      price: 0
+    };
+    setFilterParams(params);
   };
 
   const handleFilterClick = () => {
@@ -38,7 +47,7 @@ export const FilterPanel = (
     setFilterParams(params);
   };
 
-  const handleNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePriceInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (value === '' || /^\d*\.?\d*$/.test(value))
       setPrice(value);
@@ -68,17 +77,14 @@ export const FilterPanel = (
         type='search'
         placeholder='Price'
         value={price}
-        onChange={handleNumberInput}
+        onChange={handlePriceInput}
       />
-      <button
-        onClick={clearPanel}>
+      <Button onClick={clearPanel}>
         Clear All
-      </button>
-      <button
-        onClick={handleFilterClick}
-      >
+      </Button>
+      <Button onClick={handleFilterClick}>
         Filter
-      </button>
+      </Button>
     </div>
   );
 }

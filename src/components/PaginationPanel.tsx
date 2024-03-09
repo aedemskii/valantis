@@ -1,4 +1,5 @@
 import '../styles/PaginationPanel.css';
+import { Button } from './Button';
 
 export const PaginationPanel = (
   { currentPage, totalItems, offset, setPage } : {
@@ -15,23 +16,23 @@ export const PaginationPanel = (
 
   return (
     <div className='items-list-pagination-container'>
-      <button
-        className='items-list-pagination-button left'
+      <Button
         onClick={() => setPage(currentPage - 1)}
         disabled={isFirstPage}
       >
-        Previous
-      </button>
-      {!isFirstPage && <span className='items-list-pagination-ellipsis'>1... </span>}
-      <span className='items-list-pagination-current-page'>{`${listStart}-${listFinish}`}</span>
-      {!isLastPage && <span className='items-list-pagination-ellipsis'> ...{totalItems}</span>}
-      <button
-        className='items-list-pagination-button right'
+        <div className='arrow left' />
+      </Button>
+      <div>
+        {!isFirstPage && <span className='items-list-pagination-ellipsis'>1... </span>}
+        <span className='items-list-pagination-current-page'>{`${listStart}-${listFinish}`}</span>
+        {!isLastPage && <span className='items-list-pagination-ellipsis'> ...{totalItems}</span>}
+      </div>
+      <Button
         onClick={() => setPage(currentPage + 1)}
         disabled={isLastPage}
       >
-        Next
-      </button>
+        <div className='arrow right' />
+      </Button>
     </div>
   );
 }

@@ -1,0 +1,22 @@
+table.items-table {
+  border-collapse: collapse;
+  width: 80%;
+}
+
+table.items-table td, 
+table.items-table th {
+  border: 1px solid #dddddd;
+  padding: 8px;
+}
+
+table.items-table tr:hover {
+  background-color: rgb(43, 48, 56);
+}
+
+table.items-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #d87f31;
+  color: white;
+}
